@@ -17,9 +17,6 @@ const maps = require('mineflayer-maps')
 bot.loadPlugin(maps) // load it before spawning to get all maps
 ```
 
-## Examples
-Look at the `examples` folder for out of the box examples.
-
 ## Options
 This plugin extends the `BotOptions` type from mineflayer. Add them to the createBot options when creating the bot. You can also change them later by changing the `bot.maps` properties.
 
