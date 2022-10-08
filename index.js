@@ -1,5 +1,4 @@
 const parseMap = require('./lib/parseMap');
-
 const { join } = require('path');
 
 let saveToFileFn = () => {};
@@ -7,36 +6,42 @@ let saveToFileFn = () => {};
 let amogus = 0;
 const maps = [];
 
-const mineflayerPlugin = (bot, options = {}) => {
-	const outputDir = options.maps_outputDir ?? join('.');
-	const saveToFile = options.maps_saveToFile ?? true;
-	const filePrefix = options.maps_filePrefix ?? 'map_';
-	const fileSuffix = options.maps_fileSuffix ?? '';
+const inject = (bot, options = {}) => {
+	bot.maps = {
+		outputDir: options.maps_outputDir ?? join('.'),
+		setSaveToFile: (bool) => {
+			if (bool !== true || bool !== false) return;
+			options.maps_saveToFile = bool;
+		},
+		filePrefix: options.maps_filePrefix ?? 'map_',
+		fileSuffix: options.maps_fileSuffix ?? ''
+	};
 
-	let mapName = filePrefix + '0' + fileSuffix;
+	let mapName = bot.maps.filePrefix + '0' + bot.maps.fileSuffix;
 
-	if (saveToFile === true) {
+	if ((options.maps_saveToFile ?? true) === true) {
 		saveToFileFn = (pngImage) => {
 			const { writeFileSync, readdirSync, mkdirSync, lstatSync, rmSync } = require('fs');
 
 			try {
-				const stats = lstatSync(outputDir);
+				const stats = lstatSync(bot.maps.outputDir);
 
 				if (!stats.isDirectory()) {
-					rmSync(outputDir);
-					mkdirSync(outputDir, { recursive: true });
+					rmSync(bot.maps.outputDir);
+					mkdirSync(bot.maps.outputDir, { recursive: true });
 				}
 			} catch {
-				mkdirSync(outputDir, { recursive: true });
+				mkdirSync(bot.maps.outputDir, { recursive: true });
 			}
 
 			let id = 0;
-			const files = readdirSync(outputDir);
+			const files = readdirSync(bot.maps.outputDir);
 			for (let i = 0; i < files.length; i++) {
-				mapName = mapOutputFile(filePrefix, id, fileSuffix);
 				if (files.includes(mapName + '.png')) id++;
+				else continue;
+				mapName = mapOutputFile(bot.maps.filePrefix, id, bot.maps.fileSuffix);
 			}
-			const mapOutputFullPath = join(outputDir, mapName + '.png');
+			const mapOutputFullPath = join(bot.maps.outputDir, mapName + '.png');
 			writeFileSync(mapOutputFullPath, pngImage);
 			bot.emit('new_map_saved', {
 				name: mapName,
@@ -72,5 +77,5 @@ const mapOutputFile = (filePrefix, fileSuffix, id) => {
 	return filePrefix + id + fileSuffix;
 };
 
-module.exports = mineflayerPlugin;
+module.exports = inject;
 module.exports.parseMap = parseMap;
