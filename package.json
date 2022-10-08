@@ -1,6 +1,6 @@
 {
   "name": "mineflayer-maps",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "Download minecraft maps with mineflayer",
   "main": "index.js",
   "scripts": {
