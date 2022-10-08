@@ -23,7 +23,7 @@ This plugin extends the `BotOptions` type from mineflayer. Add them to the creat
 #### Example for an option
 ```javascript
 const bot = mineflayer.createBot({
-  mapDownloader_outputDir: "some/output/dir"
+  maps_outputDir: "some/output/dir"
 })
 ```
 
