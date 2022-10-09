@@ -61,7 +61,6 @@ const inject = (bot, options = {}) => {
 		else amogus++;
 
 		const pngImage = parseMap(map);
-		delete map.data;
 		bot.emit('new_map', {
 			map,
 			name: mapName,
