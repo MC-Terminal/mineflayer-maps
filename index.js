@@ -1,4 +1,6 @@
-const parseMap = require('./lib/parseMap');
+const parseASCII = require('./lib/mapToASCII');
+
+const parseMap = require('./lib/mapToPNG');
 const { join } = require('path');
 
 let saveToFileFn = () => {};
@@ -78,4 +80,5 @@ const mapOutputFile = (filePrefix, fileSuffix, id) => {
 };
 
 module.exports = inject;
-module.exports.parseMap = parseMap;
+module.exports.parsePNG = parseMap;
+module.exports.parseASCII = parseASCII;
