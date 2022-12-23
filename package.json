@@ -17,8 +17,7 @@
   },
   "homepage": "https://github.com/MC-Terminal/mineflayer-maps#readme",
   "dependencies": {
-    "easy-ansi": "^1.1.0",
-    "mineflayer": "^4.4.0",
+    "easy-ansi": "^1.1.2",
     "pngjs": "^6.0.0"
   }
 }
